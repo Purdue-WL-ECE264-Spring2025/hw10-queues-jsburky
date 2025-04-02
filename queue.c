@@ -35,7 +35,21 @@ int number_of_moves(struct game_state start)
             cur = dequeue(&q);
         }
         
-        if(cur.num_steps == 1/*find end condition*/)
+        if(cur.tiles[0][0] == 1 && 
+           cur.tiles[0][1] == 2 &&
+           cur.tiles[0][2] == 3 &&
+           cur.tiles[0][3] == 4 &&
+           cur.tiles[1][0] == 5 &&
+           cur.tiles[1][1] == 6 &&
+           cur.tiles[1][2] == 7 &&
+           cur.tiles[1][3] == 8 &&
+           cur.tiles[2][0] == 9 &&
+           cur.tiles[2][1] == 10 &&
+           cur.tiles[2][2] == 11 &&
+           cur.tiles[2][3] == 12 &&
+           cur.tiles[3][0] == 13 &&
+           cur.tiles[3][1] == 14 &&
+           cur.tiles[3][2] == 15)
         {
             return(cur.num_steps);
         }
