@@ -1,6 +1,8 @@
 #include "queue.h"
 #include "tile_game.h"
 
+int check_state(size_t, struct queue*);
+
 void enqueue(struct queue *q, struct game_state state) 
 {
     size_t val = serialize(state);
@@ -64,31 +66,66 @@ int number_of_moves(struct game_state start)
         {
             struct game_state next = cur;
             move_up(&next);
-            enqueue(&q, next);
+            if(check_state(serialize(next), &q))
+            {
+                enqueue(&q, next);
+            }
         }
 
         if((cur_row) > 0)
         {
             struct game_state next = cur;
             move_down(&next);
-            enqueue(&q, next);
+            if(check_state(serialize(next), &q))
+            {
+                enqueue(&q, next);
+            }
         }
 
         if((cur_col) < 3)
         {
             struct game_state next = cur;
             move_left(&next);
-            enqueue(&q, next);
+            if(check_state(serialize(next), &q))
+            {
+                enqueue(&q, next);
+            }
         }
 
         if((cur_col) > 0)
         {
             struct game_state next = cur;
             move_right(&next);
-            enqueue(&q, next);
+            if(check_state(serialize(next), &q))
+            {
+                enqueue(&q, next);
+            }
         }
     }
 
     //free_list(q -> data);
     return -1; 
+}
+
+int check_state(size_t check, struct queue *q)
+{
+    if(q -> data.head != NULL)
+    {
+        struct list_node *node = q -> data.head;
+        while((node -> next) != NULL)
+        {
+            if(check == node -> value)
+            {
+                return 0;
+            }
+            node = node -> next;
+        }
+
+        if(check == node -> value)
+        {
+            return 0;
+        }
+        return 1;
+    }
+    return 1;
 }
